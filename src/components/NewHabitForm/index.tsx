@@ -3,7 +3,6 @@ import * as Popover from '@radix-ui/react-popover';
 import { Check } from 'phosphor-react';
 import { FormEvent, useCallback, useState } from 'react';
 import { createANewHabit } from '../../services/Habit';
-import { ICreateHabitParams } from '../../services/Habit/types';
 import { PopoverAlert } from '../PopoverAlert';
 
 const availableWeekDays = [
