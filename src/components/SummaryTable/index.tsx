@@ -30,9 +30,7 @@ export function SummaryTable() {
     getSummaryData();
   }, []);
 
-  useEffect(() => {
-    console.log('Summary', summaryData);
-  }, [summaryData]);
+
 
   return (
     <div className="w-full flex">
