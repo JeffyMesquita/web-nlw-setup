@@ -7,7 +7,7 @@ interface IPossibleHabits {
 }
 
 interface IGetDayResponse extends AppResponse {
-  data?: IPossibleHabits[];
+  data?: { possibleHabits: IPossibleHabits[] };
 }
 
-export type { IGetDayResponse };
+export type { IGetDayResponse, IPossibleHabits };
