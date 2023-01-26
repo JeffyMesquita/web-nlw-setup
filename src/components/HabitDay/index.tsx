@@ -5,19 +5,31 @@ import { X } from 'phosphor-react';
 import dayjs from 'dayjs';
 import { HabitDayPopover } from '../HabitDayPopover';
 import { ProgressBar } from '../ProgressBar';
+import { useState } from 'react';
+import { HabitsList } from '../HabiltList';
 
 interface HabitDayProps {
   date: Date;
-  completed?: number;
+  defaultCompleted?: number;
   amount?: number;
 }
 
-export function HabitDay({ amount = 0, completed = 0, date }: HabitDayProps) {
+export function HabitDay({
+  amount = 0,
+  defaultCompleted = 0,
+  date,
+}: HabitDayProps) {
+  const [completed, setCompleted] = useState(defaultCompleted);
+
   const completedPercentage =
     amount > 0 ? Math.round((completed / amount) * 100) : 0;
 
   const dayAndMonth = dayjs(date).format('DD/MM');
-  const dayOfWeek = dayjs(date).format('dddd')
+  const dayOfWeek = dayjs(date).format('dddd');
+
+  function handleCompletedChanged(completed: number) {
+    setCompleted(completed);
+  }
 
   return (
     <Popover.Root>
@@ -38,10 +50,10 @@ export function HabitDay({ amount = 0, completed = 0, date }: HabitDayProps) {
 
       <Popover.Portal>
         <Popover.Content className="min-w-[320px] p-6 rounded-2xl bg-zinc-900 flex flex-col">
-          <Popover.Arrow className="fill-zinc-900 " height={8} width={16} />
           <Popover.Close className="absolute right-6 top-6 text-zinc-400 hover:text-zinc-200">
             <X size={24} fontWeight={600} aria-label="Fechar" />
           </Popover.Close>
+          <Popover.Arrow className="fill-zinc-900 " height={8} width={16} />
 
           <span className="font-semibold text-zinc-400">{dayOfWeek}</span>
           <span className="mt-1 font-extrabold leading-tight text-3xl">
@@ -51,7 +63,12 @@ export function HabitDay({ amount = 0, completed = 0, date }: HabitDayProps) {
           <span className="font-semibold text-zinc-700 mt-3 text-xs">{`${completedPercentage}% dos hábitos completos.`}</span>
           <ProgressBar progress={completedPercentage} />
 
-          <HabitDayPopover date={date}/>
+          <HabitsList date={date} onCompletedChanged={handleCompletedChanged} />
+
+          {/* <HabitDayPopover
+            date={date}
+            onCompletedChanged={handleCompletedChanged}
+          /> */}
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>

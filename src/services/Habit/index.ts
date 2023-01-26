@@ -17,7 +17,7 @@ const createANewHabit = async ({
 
 const toggleHabit = async (habitId: string) : Promise<void> => {
   const response = await api
-    .post(`/habits/${habitId}/toggle`)
+    .patch(`/habits/${habitId}/toggle`)
     .then((res) => res)
     .catch((err) => err.response);
 

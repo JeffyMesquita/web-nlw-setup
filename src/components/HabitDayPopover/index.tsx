@@ -8,6 +8,7 @@ import { IPossibleHabits } from '../../services/Day/types';
 
 interface HabitDayPopoverProps {
   date: Date;
+  onCompletedChanged: (completed: number) => void;
 }
 
 interface HabitsInfo {
@@ -15,7 +16,10 @@ interface HabitsInfo {
   completedHabits: string[];
 }
 
-export function HabitDayPopover({ date }: HabitDayPopoverProps) {
+export function HabitDayPopover({
+  date,
+  onCompletedChanged,
+}: HabitDayPopoverProps) {
   const [habitsInfoToday, setHabitsInfoToday] = useState({} as HabitsInfo);
 
   const isDateInPast = dayjs(date).endOf('day').isBefore(new Date());
@@ -27,7 +31,7 @@ export function HabitDayPopover({ date }: HabitDayPopoverProps) {
 
     console.log(result);
 
-    if (result?.data) {
+    if (result.data) {
       setHabitsInfoToday(result.data);
     }
   }, []);
@@ -50,19 +54,23 @@ export function HabitDayPopover({ date }: HabitDayPopoverProps) {
     } else {
       completedHabits = [...habitsInfoToday!.completedHabits, habitId];
     }
+
     setHabitsInfoToday({
       possibleHabits: habitsInfoToday!.possibleHabits,
       completedHabits,
     });
+
+    onCompletedChanged(completedHabits.length);
   }, []);
 
   useEffect(() => {
+    console.log('date', date);
     getHabitDay(date);
-  }, []);
+  }, [date]);
 
   return (
     <div className="mt-6 flex flex-cl gap-3">
-      {habitsInfoToday?.possibleHabits.map((habit) => {
+      {habitsInfoToday!.possibleHabits!.map((habit) => {
         return (
           <Checkbox.Root
             className="flex items-center gap-3 group"
