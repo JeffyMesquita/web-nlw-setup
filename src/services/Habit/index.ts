@@ -15,4 +15,13 @@ const createANewHabit = async ({
   return response.data;
 };
 
-export { createANewHabit };
+const toggleHabit = async (habitId: string) : Promise<void> => {
+  const response = await api
+    .post(`/habits/${habitId}/toggle`)
+    .then((res) => res)
+    .catch((err) => err.response);
+
+  return response.data;
+}
+
+export { createANewHabit, toggleHabit };

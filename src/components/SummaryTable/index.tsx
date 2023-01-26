@@ -30,8 +30,6 @@ export function SummaryTable() {
     getSummaryData();
   }, []);
 
-
-
   return (
     <div className="w-full flex">
       <div className="grid grid-rows-7 grid-flow-row gap-3">
@@ -49,9 +47,9 @@ export function SummaryTable() {
 
       <div className="grid grid-rows-7 grid-flow-col gap-3">
         {summaryDates.map((date) => {
-          const dayInSummary = summaryData.find(day => {
-            return dayjs(date).isSame(day.date, 'day')
-          })
+          const dayInSummary = summaryData.find((day) => {
+            return dayjs(date).isSame(day.date, 'day');
+          });
 
           return (
             <HabitDay
