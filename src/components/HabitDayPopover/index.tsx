@@ -25,11 +25,7 @@ export function HabitDayPopover({
   const isDateInPast = dayjs(date).endOf('day').isBefore(new Date());
 
   const getHabitDay = useCallback(async (date: Date) => {
-    console.log('getHabitDay', date);
-
     const result = await getDay(date.toISOString());
-
-    console.log(result);
 
     if (result.data) {
       setHabitsInfoToday(result.data);
@@ -62,11 +58,6 @@ export function HabitDayPopover({
 
     onCompletedChanged(completedHabits.length);
   }, []);
-
-  useEffect(() => {
-    console.log('date', date);
-    getHabitDay(date);
-  }, [date]);
 
   return (
     <div className="mt-6 flex flex-cl gap-3">
